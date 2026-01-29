@@ -1,0 +1,21 @@
+{
+    "club_society": "Drama Society",
+    "activity_registration_form": "12345 (Optional)",
+    "description": "Reimbursement for event supplies (Example)",
+    "payee_name": "Jane Doe",
+    "phone_number": "07400123456",
+    "email": "jane.doe@example.com",
+    "account_number": "12345678",
+    "sort_code": "010203",
+    "payee_details_changed": "No",
+    "receipts": [
+        {
+            "expenditure_type": "",
+            "expenditure_type_search": "MISCELLANEOUS EXPENDITURE",
+            "expenditure_type_select": "",
+            "grant": "N",
+            "cost": "15.00",
+            "file": "invoice.pdf"
+        }
+    ]
+}

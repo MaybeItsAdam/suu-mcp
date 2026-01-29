@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+
+# Environments
+.env
+.venv
+env/
+venv/
+
+# Project Specific
+forms/*_auth.json
+forms/default_auth.json
+*_data.json
+*.pdf
+*.png
+*.jpg
+*.jpeg
+.DS_Store
+
+# MCP & Playwright
+test-results/
+playwright-report/
+
+# Keep example data
+!*_data.example.json

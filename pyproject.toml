@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "suu-mcp"
+version = "0.1.0"
+description = "UCL Student Union Form Automation via MCP"
+readme = "README.md"
+requires-python = ">=3.10"
+
+dependencies = [
+    "fastmcp>=0.3.0",
+    "playwright",
+    "pydantic>=2.0",
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-playwright>=0.4.0",
+]
+
+[project.scripts]
+suu-mcp = "src.server:mcp.run"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]

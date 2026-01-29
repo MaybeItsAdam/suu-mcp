@@ -1,0 +1,16 @@
+README.md
+pyproject.toml
+src/__init__.py
+src/executor.py
+src/learner.py
+src/recorder.py
+src/schema.py
+src/server.py
+suu_mcp.egg-info/PKG-INFO
+suu_mcp.egg-info/SOURCES.txt
+suu_mcp.egg-info/dependency_links.txt
+suu_mcp.egg-info/entry_points.txt
+suu_mcp.egg-info/requires.txt
+suu_mcp.egg-info/top_level.txt
+tests/test_executor.py
+tests/test_schema.py

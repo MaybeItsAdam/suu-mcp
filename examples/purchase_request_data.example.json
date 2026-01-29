@@ -1,0 +1,24 @@
+{
+    "club_society": "Drama Society",
+    "cost_items": [
+        {
+            "description": "Example Item 1: Props",
+            "grant_type": "Non-grant",
+            "expenditure_type": "PRODUCTIONS COSTS",
+            "cost": "50.00"
+        },
+        {
+            "description": "Example Item 2: Costume material",
+            "grant_type": "Non-grant",
+            "expenditure_type": "KIT EXPENDITURE",
+            "cost": "25.00"
+        }
+    ],
+    "payment_method": "UK Bank transfer (e.g. to pay an invoice or pay by BACS)",
+    "company_name": "Example Props Ltd",
+    "company_email": "billing@example.com",
+    "account_number": "12345678",
+    "sort_code": "010203",
+    "invoice_number": "INV-123456",
+    "invoice_file": "invoice.pdf"
+}

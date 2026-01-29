@@ -1,0 +1,81 @@
+Metadata-Version: 2.4
+Name: suu-mcp
+Version: 0.1.0
+Summary: UCL Student Union Form Automation via MCP
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: fastmcp>=0.3.0
+Requires-Dist: playwright
+Requires-Dist: pydantic>=2.0
+Requires-Dist: pytest>=7.0
+Requires-Dist: pytest-asyncio>=0.21.0
+Requires-Dist: pytest-playwright>=0.4.0
+
+# SUU MCP Server
+
+A robust Model Context Protocol (MCP) server for automating forms at UCL Students' Union. Built with Playwright and FastMCP.
+
+## Features
+- **Form Automation**: Record and replay form interactions (typing, clicking, file uploads).
+- **Secure**: Authentication sessions are saved locally; forms are *never* automatically submitted (review mode only).
+- **Robustness**: Handles retry logic for uploads, conditional fields, and session expiry.
+
+## Installation
+
+1. **Clone and Install**:
+   ```bash
+   git clone <repo_url>
+   cd suu-mcp
+   pip install -e .
+   ```
+
+2. **Install Playwright Browsers**:
+   ```bash
+   playwright install chromium
+   ```
+
+## Usage
+
+### 1. Save Authentication
+Run this once to log in and save your session:
+```bash
+python save_auth.py
+```
+
+### 2. Record a New Form
+Interactive recording of a form definition:
+```bash
+python record_form_def.py "<url>" --id <form_id>
+```
+
+### 3. Run Manually (Test)
+```bash
+python run_form.py <form_id> --data <path_to_data.json>
+```
+
+## Claude Desktop Configuration
+
+Add this to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "suu-mcp": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/Users/adam/Documents/Programming/SUU-MCP",
+        "run",
+        "suu-mcp"
+      ]
+    }
+  }
+}
+```
+
+## Testing
+
+Run the test suite:
+```bash
+pytest
+```
