@@ -17,6 +17,7 @@ forms/default_auth.json
 *.png
 *.jpg
 *.jpeg
+!logo.png
 .DS_Store
 
 # MCP & Playwright

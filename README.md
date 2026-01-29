@@ -1,6 +1,8 @@
 # SUU MCP Server
 
-A robust Model Context Protocol (MCP) server for automating forms at UCL Students' Union (https://studentsunionucl.org). Built with Playwright and FastMCP.
+A robust Model Context Protocol (MCP) server for automating Students' Union UCL forms for student leaders (https://studentsunionucl.org). Built with Playwright and FastMCP.
+
+Not affiliated with UCL or the Students' Union UCL.
 
 ## Features
 

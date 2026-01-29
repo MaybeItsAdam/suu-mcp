@@ -107,6 +107,15 @@ def list_available_forms() -> str:
     return result
 
 
+@mcp.resource("logo://png")
+def get_logo() -> bytes:
+    """Returns the server logo."""
+    try:
+        with open(os.path.join(os.path.dirname(__file__), "..", "logo.png"), "rb") as f:
+            return f.read()
+    except FileNotFoundError:
+        return b""
+
 @mcp.tool()
 async def run_form_automation(form_id: str, data: str) -> str:
     """
