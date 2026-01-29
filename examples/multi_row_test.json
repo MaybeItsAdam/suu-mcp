@@ -1,0 +1,36 @@
+{
+    "club_society": "Drama Society",
+    "cost_items": [
+        {
+            "description": "Item 1: Stage Props (Grant)",
+            "grant_type": "Grant",
+            "expenditure_type": "PRODUCTIONS COSTS",
+            "cost": "100.00"
+        },
+        {
+            "description": "Item 2: Safety Equipment (Non-grant)",
+            "grant_type": "Non-grant",
+            "expenditure_type": "EQUIPMENT PURCHASE",
+            "cost": "150.50"
+        },
+        {
+            "description": "Item 3: Guest Speaker Fee (Grant)",
+            "grant_type": "Grant",
+            "expenditure_type": "SPEAKERS/WORKSHOPS",
+            "cost": "200.00"
+        },
+        {
+            "description": "Item 4: Workshop Materials (Non-grant)",
+            "grant_type": "Non-grant",
+            "expenditure_type": "MISCELLANEOUS EXPENDITURE",
+            "cost": "35.75"
+        }
+    ],
+    "payment_method": "UK Bank transfer (e.g. to pay an invoice or pay by BACS)",
+    "company_name": "Stage & Safety Ltd",
+    "company_email": "accounts@stagesafety.co.uk",
+    "account_number": "87654321",
+    "sort_code": "090807",
+    "invoice_number": "INV-MULTI-001",
+    "invoice_file": "examples/invoice.pdf"
+}

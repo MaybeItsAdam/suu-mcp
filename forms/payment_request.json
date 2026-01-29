@@ -1,7 +1,7 @@
 {
     "form_id": "payment_request",
     "url": "https://studentsunionucl.org/forms/payment-request-form",
-    "description": "UCL Student Union Payment Request Form (UK). USE THIS FOR REIMBURSEMENTS (paying back a member) or paying invoices via UK Bank Transfer. Do not use for purchasing new items (use Purchase Request). Limit: £350 GBP.",
+    "description": "UCL Student Union Payment Request Form (UK). USE THIS FOR REIMBURSEMENTS (paying back a member) ONLY. Do not use for paying invoices or purchasing new items directly from suppliers.",
     "login_required": true,
     "fields": [
         {

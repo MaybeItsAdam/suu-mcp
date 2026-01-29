@@ -13,8 +13,8 @@ A robust Model Context Protocol (MCP) server for automating forms at UCL Student
 
 | Form ID | Description | Use Case |
 | :--- | :--- | :--- |
-| `purchase_request` | **Purchase Request Form** | Request the Union to buy something for you (they pay supplier directly). |
-| `payment_request` | **Payment Request Form** | Request reimbursement (pay back a member) or pay an invoice via Bank Transfer. |
+| `purchase_request` | **Purchase Request Form** | Paying Invoices (to Suppliers) OR asking the Union to buy something. |
+| `payment_request` | **Payment Request Form** | Reimbursements (paying back a member) ONLY. DO NOT use for invoices. |
 
 ## Installation
 

@@ -1,7 +1,7 @@
 {
     "form_id": "purchase_request",
     "url": "https://studentsunionucl.org/forms/purchase-request-form",
-    "description": "UCL Student Union Purchase Request Form. USE THIS ONLY IF YOU WANT THE UNION TO BUY SOMETHING FOR YOU (e.g. they pay the supplier directly). DO NOT use this for reimbursement (use Payment Request instead). Provide a breakdown of costs.",
+    "description": "UCL Student Union Purchase Request Form. USE THIS FOR PAYING INVOICES (Suppliers) OR ASKING THE UNION TO BUY SOMETHING. DO NOT use this for reimbursing members (use Payment Request). Provide a breakdown of costs.",
     "login_required": true,
     "fields": [
         {
@@ -14,9 +14,9 @@
         {
             "name": "cost_items",
             "type": "list",
-            "description": "List of items being purchased. TIP: If multiple small items are from the same invoice, SUMMARIZE them into a single line item with the TOTAL cost to simplify the form.",
+            "description": "List of items being purchased. TIP: You may summarize multiple small items from the same invoice into a single line if they share the same expenditure type, but list them separately if they require distinct categorization.",
             "required": true,
-            "add_button_selector": "#edit-description-of-goods-or-services-add-submit",
+            "add_button_selector": "[data-drupal-selector='edit-description-of-goods-or-services-add-submit']",
             "fields": [
                 {
                     "name": "description",

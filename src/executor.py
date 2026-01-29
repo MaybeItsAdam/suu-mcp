@@ -109,18 +109,45 @@ class FormExecutor:
         Tries by value first, then by label.
         """
         locator = await self.wait_for_element(selector)
+        
+        # Wait for element to be enabled (handling AJAX states)
+        try:
+             await locator.first.expect.to_be_enabled(timeout=5000)
+        except:
+             print(f"Warning: Element {selector} did not become enabled, trying anyway...")
+
         try:
             await locator.first.select_option(value=str(value), timeout=2000, force=True)
+            await self.wait_for_ajax()
             return True
         except Exception:
             try:
                 await locator.first.select_option(label=str(value), timeout=2000, force=True)
+                await self.wait_for_ajax()
                 return True
             except Exception as e:
                 try:
+                    # 3. Fuzzy match: fetch all options and compare
                     options = await locator.first.evaluate(
                         "el => Array.from(el.options).map(o => ({val: o.value, text: o.text}))"
                     )
+                    
+                    search_norm = str(value).strip().lower()
+                    best_match = None
+                    
+                    for opt in options:
+                        text_norm = opt['text'].strip().lower()
+                        # specific fix for the user's case or general fuzzy inclusions
+                        if search_norm in text_norm or text_norm in search_norm:
+                            print(f"Fuzzy match found: '{value}' -> '{opt['text']}'")
+                            best_match = opt['val']
+                            break
+                    
+                    if best_match:
+                        await locator.first.select_option(value=best_match, timeout=2000, force=True)
+                        await self.wait_for_ajax()
+                        return True
+                        
                     print(f"Failed to select '{value}'. Available options: {options}")
                 except:
                     pass
@@ -154,11 +181,11 @@ class FormExecutor:
             
             # 1. Force unhide if needed (common for styled file inputs)
             try:
-                if not await locator.first.is_visible():
-                    print("File input is hidden, forcing visibility...")
-                    await locator.first.evaluate("el => { el.style.display = 'block'; el.style.visibility = 'visible'; el.style.opacity = '1'; }")
+                # Unconditionally unhide to be safe
+                print("Forcing file input visibility...")
+                await locator.first.evaluate("el => { el.style.display = 'block'; el.style.visibility = 'visible'; el.style.opacity = '1'; }")
             except Exception as e:
-                print(f"Warning checking visibility: {e}")
+                print(f"Warning forcing visibility: {e}")
 
             # 2. Set files
             await locator.first.set_input_files(str(file_path))
@@ -277,6 +304,8 @@ class FormExecutor:
         
         elif field.type == 'select':
             await self.select_option(field.selector, value)
+            # Drupal often triggers AJAX on select changes, and select_option now handles it, 
+            # but we can double check or rely on the method.
         
         elif field.type == 'checkbox':
             checked = str(value).lower() in ('true', 'yes', '1', 'on')
@@ -343,9 +372,46 @@ class FormExecutor:
         if len(items) > 1 and field.add_button_selector:
             for i in range(len(items) - 1):
                 print(f"Clicking add button: {field.add_button_selector}")
-                await self.click(field.add_button_selector)
-                await self.wait_for_ajax()
-                await asyncio.sleep(1)
+                try:
+                    # Provide a custom retry for the add button as it involves AJAX
+                    btn = self.page.locator(field.add_button_selector).first
+                    # Wait for it to become enabled (up to 5s)
+                    try: 
+                        await btn.expect.to_be_enabled(timeout=5000)
+                    except:
+                        pass
+
+                    if await btn.is_enabled():
+                        print(f"Clicking Add button for row {i+2}...")
+                        # Ensure button is in view
+                        await btn.scroll_into_view_if_needed()
+                        await btn.click(force=True)
+                        await self.wait_for_ajax()
+                        
+                        # Explicitly wait for the new row to appear
+                        # Expecting row index i+1 (since i starts at 0 for the first ADD, which creates row 1)
+                        if field.fields:
+                            # Try to find a selector to wait for from the first child field
+                            for child in field.fields:
+                                if child.selector and ("{i}" in child.selector or "{n}" in child.selector):
+                                    new_row_selector = child.selector.replace('{i}', str(i+1)).replace('{n}', str(i+2))
+                                    # Clean up complex selectors to get the main element
+                                    if " " in new_row_selector:
+                                        new_row_selector = new_row_selector.split(" ")[0]
+                                    
+                                    print(f"Waiting for new row element: {new_row_selector}")
+                                    try:
+                                        await self.page.wait_for_selector(new_row_selector, state='attached', timeout=10000)
+                                        print(f"Row {i+2} confirmed attached.")
+                                    except Exception as e:
+                                        print(f"Warning: Timeout waiting for new row {i+2}: {e}")
+                                    break
+                    else:
+                        print("Add button is disabled or invalid, skipping row addition.")
+                        break
+                except Exception as e:
+                    print(f"Warning: Failed to add row {i+2}: {e}")
+                    # Try to continue filling what we have headers for
         
         # Wait for all rows to be ready
         await self._wait_for_list_rows(field, len(items))
@@ -353,7 +419,10 @@ class FormExecutor:
         # Process each item
         for i, item_data in enumerate(items):
             print(f"Processing item {i+1}/{len(items)} in {field.name}")
-            await self._process_list_item(field, item_data, i)
+            try:
+                await self._process_list_item(field, item_data, i)
+            except Exception as e:
+                print(f"Error processing list item {i+1}: {e}")
     
     async def _wait_for_list_rows(self, field: FormField, expected_count: int):
         """Waits for the expected number of list rows to be present."""
@@ -389,6 +458,12 @@ class FormExecutor:
                     if "{i}" in temp_field.validation_selector or "{n}" in temp_field.validation_selector:
                         temp_field.validation_selector = temp_field.validation_selector.format(i=index, n=index+1)
                 
-                await self._process_field(temp_field, item_data)
+                try:
+                    await self._process_field(temp_field, item_data)
+                except Exception as e:
+                    print(f"Error filling field {child_field.name} in row {index+1}: {e}")
             else:
-                await self._process_field(child_field, item_data)
+                try:
+                    await self._process_field(child_field, item_data)
+                except Exception as e:
+                    print(f"Error filling field {child_field.name} in row {index+1}: {e}")
