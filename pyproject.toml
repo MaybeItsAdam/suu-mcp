@@ -18,6 +18,11 @@ dependencies = [
     "pytest-playwright>=0.4.0",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "google-genai>=0.3.0",  # Only needed for scripts/create_form_def.py helper
+]
+
 [project.scripts]
 suu-mcp = "src.server:mcp.run"
 

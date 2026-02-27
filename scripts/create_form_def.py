@@ -1,3 +1,9 @@
+"""
+Helper script to automatically generate form definitions using AI (Gemini).
+
+Note: This requires the optional 'dev' dependencies:
+    pip install -e ".[dev]"
+"""
 import argparse
 import sys
 import os
