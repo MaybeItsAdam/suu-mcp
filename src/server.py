@@ -5,7 +5,7 @@ from .executor import FormExecutor
 from .schema import FormDefinition
 
 mcp = FastMCP(
-    "SUU-MCP",
+    "suu-auto",
     instructions="""
     You are an assistant that can automate UCL Student Union web forms.
     
