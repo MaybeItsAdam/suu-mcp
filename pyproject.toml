@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "suu-mcp"
+name = "suu-auto"
 version = "0.1.0"
-description = "UCL Student Union Form Automation via MCP"
+description = "UCL Student Union form automation — MCP server and receipt-gatherer polling worker"
 readme = "README.md"
 requires-python = ">=3.10"
 
@@ -13,13 +13,24 @@ dependencies = [
     "fastmcp>=0.3.0",
     "playwright",
     "pydantic>=2.0",
+    "httpx",
+    "python-dotenv",
+]
+
+[project.optional-dependencies]
+dev = [
     "pytest>=7.0",
     "pytest-asyncio>=0.21.0",
     "pytest-playwright>=0.4.0",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "google-genai>=0.3.0",  # Only needed for scripts/create_form_def.py helper
+]
+
 [project.scripts]
-suu-mcp = "src.server:mcp.run"
+suu-auto = "src.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
